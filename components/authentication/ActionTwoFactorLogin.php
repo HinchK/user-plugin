@@ -191,6 +191,7 @@ trait ActionTwoFactorLogin
         ])->validate();
 
         $user = $this->getUserModel()
+            ->applyRegistered()
             ->where(UserHelper::username(), $credentials[UserHelper::username()])
             ->first()
         ;

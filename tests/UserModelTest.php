@@ -435,6 +435,25 @@ class UserModelTest extends PluginTestCase
         $this->assertEquals(2, User::where('email', 'shared@example.tld')->count());
     }
 
+    public function testRegisteredUserCanShareEmailWithGuest()
+    {
+        $guest = $this->createGuestUser(['email' => 'shared@example.tld']);
+        $registered = $this->createTestUser(['email' => 'shared@example.tld']);
+
+        $this->assertTrue($guest->is_guest);
+        $this->assertFalse((bool) $registered->is_guest);
+        $this->assertEquals(2, User::where('email', 'shared@example.tld')->count());
+    }
+
+    public function testTwoRegisteredUsersCannotShareEmail()
+    {
+        $this->createTestUser(['email' => 'shared@example.tld']);
+
+        $this->expectException(\October\Rain\Database\ModelException::class);
+
+        $this->createTestUser(['email' => 'shared@example.tld']);
+    }
+
     public function testRequiresPasswordConfirmation()
     {
         $this->expectException(\October\Rain\Database\ModelException::class);

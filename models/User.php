@@ -68,8 +68,8 @@ class User extends Model implements Authenticatable, CanResetPassword
      */
     public $rules = [
         'first_name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'between:3,255', 'email', 'unique:users,email,NULL,id,is_guest,false'],
-        'username' => ['required', 'between:2,255', 'unique:users,username,NULL,id,is_guest,false'],
+        'email' => ['required', 'between:3,255', 'email', 'unique:users,email,NULL,id,is_guest,!1'],
+        'username' => ['required', 'between:2,255', 'unique:users,username,NULL,id,is_guest,!1'],
         'password' => ['required:create', 'string', 'confirmed'],
         'avatar' => ['nullable', 'image', 'max:4000'],
     ];

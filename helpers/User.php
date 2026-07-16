@@ -4,7 +4,7 @@ use RainLab\User\Models\Setting as UserSetting;
 use RainLab\User\Classes\Validation\PasswordRule;
 
 /**
- * User defines some helpers for the user module
+ * User defines some helpers for the user plugin
  *
  * @package rainlab\user
  * @author Alexey Bobkov, Samuel Georges

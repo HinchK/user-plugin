@@ -359,7 +359,7 @@ class User extends Model implements Authenticatable, CanResetPassword
         if ($this->is_guest) {
             $this->primary_group = UserGroup::getGuestGroup();
         }
-        elseif (!$this->primary_group_id) {
+        elseif (!$this->primary_group_id && !array_key_exists('primary_group_id', $this->attributes)) {
             $this->primary_group = UserGroup::getRegisteredGroup();
         }
     }

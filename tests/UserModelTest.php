@@ -220,6 +220,32 @@ class UserModelTest extends PluginTestCase
         $this->assertEquals($guestGroup->id, $guest->primary_group_id);
     }
 
+    public function testNewUserGetsNoGroupsWhenRegisteredGroupMissing()
+    {
+        UserGroup::where('code', UserGroup::GROUP_REGISTERED)->delete();
+        UserGroup::clearKeyCodeCache();
+
+        $user = $this->createTestUser();
+
+        $this->assertNull($user->primary_group_id);
+        $this->assertEquals(0, $user->groups()->count());
+    }
+
+    public function testExplicitNullPrimaryGroupSkipsDefaultGroup()
+    {
+        $user = new User;
+        $user->first_name = 'Test';
+        $user->last_name = 'User';
+        $user->email = 'nogroup@example.tld';
+        $user->password = 'ChangeMe888';
+        $user->password_confirmation = 'ChangeMe888';
+        $user->primary_group_id = null;
+        $user->save();
+
+        $this->assertNull($user->primary_group_id);
+        $this->assertEquals(0, $user->groups()->count());
+    }
+
     public function testAddGroupByModel()
     {
         $user = $this->createTestUser();

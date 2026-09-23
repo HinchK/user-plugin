@@ -85,6 +85,7 @@ tabs:
             label: Primary Group
             tab: Account
             type: relation
+            emptyOption: -- no primary group --
             scope: withoutGuest
 
         groups:
